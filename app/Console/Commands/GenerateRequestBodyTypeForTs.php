@@ -23,7 +23,7 @@ class GenerateRequestBodyTypeForTs extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Form Requestからtypescriptのtypeを生成する';
 
     /**
      * @var string[]
