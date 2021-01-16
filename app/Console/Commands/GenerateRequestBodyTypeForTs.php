@@ -41,6 +41,9 @@ class GenerateRequestBodyTypeForTs extends Command
     {
         parent::__construct();
         $this->init();
+        $this->requestClasses = [
+            LoginRequest::class
+        ];
     }
 
     private function init()
@@ -56,13 +59,17 @@ class GenerateRequestBodyTypeForTs extends Command
      */
     public function handle()
     {
-        $this->generateRequestUsecase(LoginRequest::class);
+        foreach ($this->requestClasses as $class) {
+            $this->generateRequestUsecase($class);
+        }
     }
 
     private function generateRequestUsecase(string $class)
     {
         $reflectionClass = new ReflectionClass($class);
         $className = $reflectionClass->getShortName();
+
+        $this->info("{$className} start");
 
         $requestBodyObject = '';
         $validationObject = '';
@@ -106,7 +113,7 @@ class GenerateRequestBodyTypeForTs extends Command
             $operator = in_array('nullable', $arrVal) ? '?:' : ':';
 
             $requestBodyObject .= "    {$key}{$operator} {$type}\n";
-            $validationObject .= "        {$key}?: string\n";
+            $validationObject .= "        {$key}?: string[]\n";
         }
         $requestBodyObject = substr($requestBodyObject, 0, -1);
         $validationObject = substr($validationObject, 0, -1);
@@ -133,6 +140,8 @@ class GenerateRequestBodyTypeForTs extends Command
             $this->getOutputTsPath().'/'.$className.'.ts',
             $writableData
         );
+
+        $this->info("{$className} end");
     }
 
     /**
