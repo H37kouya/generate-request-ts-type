@@ -19,16 +19,16 @@ export interface LoginRequest {
  */
 export interface LoginRequestValidationError {
     type: 'LoginRequestValidationError'
-    error: {
-        name?: string
-        email?: string
-        number?: string
-        digits?: string
-        ids?: string
-        codes?: string
-        mainImage1?: string
-        mainImage2?: string
-        images?: string
+    errors: {
+        name?: string[]
+        email?: string[]
+        number?: string[]
+        digits?: string[]
+        ids?: string[]
+        codes?: string[]
+        mainImage1?: string[]
+        mainImage2?: string[]
+        images?: string[]
     }
     message: string
 }
